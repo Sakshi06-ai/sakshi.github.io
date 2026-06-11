@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sakshi · AllianceBernstein — Derivative Reconciliation Analyst</title>
+<style>
+:root{
+  --ink:#10243E;
+  --paper:#F6F3EC;
+  --paper2:#EFEAE0;
+  --line:#D8D2C4;
+  --gold:#B08D57;
+  --teal:#2F6F6B;
+  --teal-soft:#E4EFEE;
+  --text:#2A2F36;
+  --muted:#6B7280;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:"Inter",-apple-system,Segoe UI,sans-serif;
+  background:var(--paper);
+  color:var(--text);
+  line-height:1.6;
+}
+h1,h2,h3,h4{font-family:"Georgia","Source Serif Pro",serif;font-weight:600;color:var(--ink);}
+.wrap{max-width:980px;margin:0 auto;padding:0 28px;}
+
+/* ===== NAV ===== */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(246,243,236,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;}
+.brand{display:flex;align-items:center;gap:10px;font-family:Georgia,serif;font-weight:700;color:var(--ink);}
+.brand .mark{
+  width:30px;height:30px;border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gold);font-family:Georgia,serif;
+}
+.navlinks{display:flex;gap:22px;font-size:13px;letter-spacing:.03em;}
+.navlinks a{color:var(--muted);text-decoration:none;transition:color .2s;}
+.navlinks a:hover{color:var(--ink);}
+@media(max-width:760px){.navlinks{display:none;}}
+
+/* ===== HERO ===== */
+.hero{padding:64px 0 40px;}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;}
+@media(max-width:760px){.hero-grid{grid-template-columns:1fr;}}
+.eyebrow{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+  font-weight:600;margin-bottom:14px;
+}
+.hero h1{font-size:46px;line-height:1.18;margin-bottom:18px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero p.lede{font-size:16px;color:var(--muted);max-width:50ch;margin-bottom:22px;}
+.contact-line{font-size:13px;color:var(--muted);}
+.contact-line a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--gold);}
+.refbox{
+  font-size:12px;color:var(--muted);margin-top:14px;
+  border-left:2px solid var(--gold);padding-left:10px;
+}
+
+.photo-card{
+  position:relative;background:var(--ink);border-radius:6px;padding:10px;
+  box-shadow:0 18px 40px -18px rgba(16,36,62,.45);
+  width:60%;margin-left:auto;margin-right:0;
+}
+.photo-card img{
+  width:100%;display:block;border-radius:3px;filter:grayscale(15%);
+}
+.photo-tag{
+  position:absolute;bottom:-14px;left:14px;right:14px;
+  background:var(--paper);border:1px solid var(--line);
+  padding:8px 14px;font-size:12px;color:var(--muted);
+  display:flex;justify-content:space-between;
+}
+.photo-tag b{color:var(--ink);font-family:Georgia,serif;font-size:13px;}
+
+/* ===== STAT STRIP — "Reconciliation Ledger" ===== */
+.ledger{
+  margin:48px 0;border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  background:white;
+}
+.ledger-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 18px;background:var(--ink);color:var(--paper);
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+}
+.ledger-head .status{color:var(--gold);font-weight:600;}
+.ledger-rows{display:grid;grid-template-columns:repeat(4,1fr);}
+@media(max-width:700px){.ledger-rows{grid-template-columns:repeat(2,1fr);}}
+.ledger-row{
+  padding:18px 16px;border-right:1px solid var(--line);border-top:1px solid var(--line);
+}
+.ledger-row:nth-child(4n){border-right:none;}
+.ledger-row .num{font-family:Georgia,serif;font-size:26px;color:var(--ink);font-weight:700;}
+.ledger-row .check{color:var(--teal);font-size:13px;margin-left:6px;}
+.ledger-row .lbl{font-size:12px;color:var(--muted);margin-top:4px;}
+
+/* ===== SECTION HEADERS ===== */
+.section{padding:56px 0;border-top:1px solid var(--line);}
+.section .kicker{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);
+  font-weight:600;margin-bottom:8px;
+}
+.section h2{font-size:32px;margin-bottom:6px;}
+.section h2 em{font-style:italic;color:var(--gold);}
+.section .intro{color:var(--muted);max-width:62ch;margin-bottom:34px;font-size:15px;}
+
+/* ===== EXPERIENCE ===== */
+.job{
+  display:grid;grid-template-columns:200px 1fr;gap:24px;
+  padding:26px 0;border-top:1px solid var(--line);
+}
+.job:first-of-type{border-top:none;}
+@media(max-width:700px){.job{grid-template-columns:1fr;gap:8px;}}
+.job .meta b{display:block;font-size:15px;color:var(--ink);}
+.job .meta span{font-size:12.5px;color:var(--muted);}
+.job .dates{font-size:12px;color:var(--gold);margin-top:6px;font-weight:600;}
+.job ul{padding-left:18px;margin-top:8px;}
+.job li{margin-bottom:7px;font-size:14.5px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.tag{
+  font-size:11px;background:var(--teal-soft);color:var(--teal);
+  padding:4px 10px;border-radius:20px;font-weight:600;
+}
+
+/* ===== SKILLS / RECON MAP ===== */
+.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+@media(max-width:700px){.skill-grid{grid-template-columns:1fr;}}
+.skill-card{background:white;border:1px solid var(--line);border-radius:4px;padding:20px;}
+.skill-card h4{font-size:15px;margin-bottom:6px;}
+.skill-card p{font-size:13px;color:var(--muted);margin-bottom:12px;}
+.skill-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-top:1px solid var(--paper2);}
+.skill-row:first-of-type{border-top:none;}
+.lvl{font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.04em;}
+
+/* ===== WHY AB ===== */
+.value-item{
+  display:grid;grid-template-columns:64px 1fr;gap:20px;
+  padding:24px 0;border-top:1px solid var(--line);
+}
+.value-item:first-of-type{border-top:none;}
+@media(max-width:700px){.value-item{grid-template-columns:1fr;}}
+.value-item .glyph{
+  width:48px;height:48px;border:1px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:Georgia,serif;font-size:18px;
+}
+.value-item h4{font-size:17px;margin-bottom:6px;}
+.value-item p{font-size:14.5px;color:var(--text);}
+.value-item .proof{font-size:12.5px;color:var(--teal);font-weight:600;margin-top:8px;}
+
+.quote{
+  margin:48px 0;padding:32px;background:var(--ink);color:var(--paper);
+  border-radius:4px;font-family:Georgia,serif;font-size:18px;font-style:italic;
+  text-align:center;line-height:1.5;
+}
+.quote span{display:block;margin-top:14px;font-size:12px;font-style:normal;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;}
+
+/* ===== PROJECTS ===== */
+.project{background:white;border:1px solid var(--line);border-radius:4px;padding:24px;margin-bottom:18px;}
+.project h4{font-size:17px;margin-bottom:4px;}
+.project .sub{font-size:12.5px;color:var(--gold);font-weight:600;margin-bottom:12px;letter-spacing:.04em;}
+.project ul{padding-left:18px;margin-bottom:12px;}
+.project li{font-size:14.5px;margin-bottom:6px;}
+.finding{
+  background:var(--teal-soft);border-left:3px solid var(--teal);
+  padding:12px 14px;font-size:13.5px;border-radius:2px;
+}
+
+/* ===== EDUCATION ===== */
+.edu{display:flex;gap:20px;padding:18px 0;border-top:1px solid var(--line);}
+.edu:first-of-type{border-top:none;}
+.edu .yr{font-family:Georgia,serif;font-weight:700;color:var(--gold);min-width:100px;font-size:14px;}
+.edu .body b{display:block;font-size:15px;}
+.edu .body span{font-size:12.5px;color:var(--muted);}
+.edu .pct{font-size:12px;color:var(--teal);font-weight:700;}
+
+/* ===== COVER LETTER ===== */
+.letter{
+  background:white;border:1px solid var(--line);border-radius:4px;
+  padding:36px;font-size:14.5px;
+}
+.letter p{margin-bottom:14px;}
+.letter .sign{font-family:Georgia,serif;font-size:18px;color:var(--ink);margin-top:6px;}
+
+/* ===== FOOTER ===== */
+footer{padding:48px 0 60px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--line);}
+footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--gold);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="mark">AB</span> Sakshi · Candidate Portfolio</div>
+    <div class="navlinks">
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#why">Why AB</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#letter">Cover Letter</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Derivative Reconciliation Analyst · R0018678 · Pune</div>
+      <h1>Every break has<br><em>a reason — and a fix.</em></h1>
+      <p class="lede">Two years building reconciliation and control systems from scratch — 100% accuracy across 50+ monthly transactions, zero compliance flags, and a live finance function run remotely without missing a single cycle. That same discipline is what daily OTC derivative reconciliation across Rates, Credit, Equity and FX demands.</p>
+      <div class="contact-line">
+        pg24sakshi@isbm.ac.in &nbsp;·&nbsp; +91 92267 17296 &nbsp;·&nbsp; +91 82073 19683 &nbsp;·&nbsp;
+        <a href="https://linkedin.com/in/sakshi2906" target="_blank">linkedin.com/in/sakshi2906</a>
+      </div>
+      <div class="refbox">Applying for: Derivative Reconciliation Analyst, Global Technology &amp; Operations — AllianceBernstein, Pune</div>
+    </div>
+    <div class="photo-card">
+      <img src="data:image/png;base64,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" alt="Sakshi">
+      <div class="photo-tag"><span>Sakshi</span><b>PGDM Finance · 2026</b></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="ledger">
+    <div class="ledger-head"><span>Reconciliation Summary</span><span class="status">All items matched ✓</span></div>
+    <div class="ledger-rows">
+      <div class="ledger-row"><div class="num">100%<span class="check">✓</span></div><div class="lbl">Payment accuracy, 50+ monthly transactions</div></div>
+      <div class="ledger-row"><div class="num">Zero<span class="check">✓</span></div><div class="lbl">Compliance flags in 2 years</div></div>
+      <div class="ledger-row"><div class="num">12<span class="check">✓</span></div><div class="lbl">Months running finance ops fully remote</div></div>
+      <div class="ledger-row"><div class="num">15+<span class="check">✓</span></div><div class="lbl">Client accounts reconciled, audit-ready</div></div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="kicker">Experience</div>
+    <h2>Reconciliation work, <em>before it had that name.</em></h2>
+    <p class="intro">Three roles, all built around the same core: matching records, chasing discrepancies to ground, and closing the loop with documentation that survives an audit.</p>
+
+    <div class="job">
+      <div class="meta">
+        <b>Holysun Logistics Pvt. Ltd.</b>
+        <span>Finance &amp; Compliance Associate · Chhattisgarh</span>
+        <div class="dates">Aug 2023 – Aug 2025</div>
+      </div>
+      <div>
+        <ul>
+          <li>Owned end-to-end reconciliation of contractor payments, client billing and cash flow records across <b>50+ monthly transactions</b> — 100% accuracy maintained throughout.</li>
+          <li>Investigated and resolved discrepancies in contractor declarations and payment records through systematic break-checking — zero compliance flags raised in two years.</li>
+          <li>Built an automated MIS and control system tracking budget vs. actual across material, labour and equipment cost heads — 30% improvement in reporting turnaround.</li>
+          <li>Ran this reconciliation function entirely remotely from Pune for 12 consecutive months while completing PGDM full-time — zero missed cycles.</li>
+        </ul>
+        <div class="tags"><span class="tag">Reconciliation</span><span class="tag">Exception Resolution</span><span class="tag">MIS Controls</span><span class="tag">Audit Documentation</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="meta">
+        <b>Crusha Digital Marketing &amp; Co.</b>
+        <span>Financial Analyst Intern · Bihar</span>
+        <div class="dates">May 2025 – Aug 2025</div>
+      </div>
+      <div>
+        <ul>
+          <li>Reconciled client invoicing records across 3 client accounts — <b>zero outstanding disputes</b> at month-end through timely break resolution.</li>
+          <li>Tracked revenue, expenses and cash flow across 8+ campaigns with 100% month-end accuracy using Excel-based P&amp;L trackers (VLOOKUP, PivotTables).</li>
+        </ul>
+        <div class="tags"><span class="tag">Invoice Reconciliation</span><span class="tag">Excel / VBA-ready</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="meta">
+        <b>Sanjeeva Shanker Urmila &amp; Co.</b>
+        <span>Accounts &amp; Tax Intern · CA Firm, Bihar</span>
+        <div class="dates">Jun 2022 – Jul 2023</div>
+      </div>
+      <div>
+        <ul>
+          <li>Supported statutory audit of Patliputra Cooperative Bank — reconciled 12+ months of financial records, prepared working papers.</li>
+          <li>Maintained bank reconciliation statements, balance sheets and P&amp;Ls for 10+ clients simultaneously — 100% deadline compliance.</li>
+          <li>Filed GST and income tax returns for 15+ clients with zero errors across all submissions.</li>
+        </ul>
+        <div class="tags"><span class="tag">Bank Reconciliation</span><span class="tag">Statutory Audit</span><span class="tag">Workflow Discipline</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="kicker">Capabilities</div>
+    <h2>Process, controls <em>and the instruments.</em></h2>
+    <p class="intro">Strong on the reconciliation discipline that transfers directly — and building, deliberately, on the OTC derivatives knowledge a Rates/Credit/Equity/FX desk runs on.</p>
+
+    <div class="skill-grid">
+      <div class="skill-card">
+        <h4>Reconciliation &amp; Operations</h4>
+        <p>The core of two years of work — matching, breaking, and closing.</p>
+        <div class="skill-row"><span>Multi-party / Counterparty Reconciliation</span><span class="lvl">Expert</span></div>
+        <div class="skill-row"><span>Trade Break Investigation</span><span class="lvl">Advanced</span></div>
+        <div class="skill-row"><span>Settlement Operations</span><span class="lvl">Advanced</span></div>
+        <div class="skill-row"><span>Audit-Ready Documentation</span><span class="lvl">Expert</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>OTC Derivatives Foundation</h4>
+        <p>Studied through NISM Series XV — applied alongside live reconciliation experience.</p>
+        <div class="skill-row"><span>Interest Rate Swaps, FX Forwards</span><span class="lvl">In Progress</span></div>
+        <div class="skill-row"><span>Equity Options &amp; Futures</span><span class="lvl">In Progress</span></div>
+        <div class="skill-row"><span>NISM Series XV — Research Analyst</span><span class="lvl">In Progress</span></div>
+        <div class="skill-row"><span>Settlement Workflow Mapping</span><span class="lvl">Proficient</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>Excel &amp; Reporting</h4>
+        <p>Built the MIS reporting system at Holysun from nothing — not a classroom exercise.</p>
+        <div class="skill-row"><span>Advanced Excel (VLOOKUP, PivotTables)</span><span class="lvl">Expert</span></div>
+        <div class="skill-row"><span>Variance &amp; Exception Analysis</span><span class="lvl">Advanced</span></div>
+        <div class="skill-row"><span>Dynamic Dashboards</span><span class="lvl">Advanced</span></div>
+        <div class="skill-row"><span>Power BI</span><span class="lvl">In Progress</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>Controls &amp; Compliance</h4>
+        <p>Two years, zero flags — the muscle memory a control function needs.</p>
+        <div class="skill-row"><span>Control Weakness Identification</span><span class="lvl">Advanced</span></div>
+        <div class="skill-row"><span>P&amp;L &amp; Bank Reconciliation</span><span class="lvl">Expert</span></div>
+        <div class="skill-row"><span>Statutory Audit Support</span><span class="lvl">Advanced</span></div>
+        <div class="skill-row"><span>GST / Tax Filing (Zero Errors)</span><span class="lvl">Advanced</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="kicker">Value Proposition</div>
+    <h2>Why this role, <em>specifically.</em></h2>
+    <p class="intro">Not "I'm detail-oriented." Here's where two years of reconciliation work maps directly onto a Derivative Operations desk covering Rates, Credit, Equity and FX.</p>
+
+    <div class="value-item">
+      <div class="glyph">①</div>
+      <div>
+        <h4>I close breaks — I don't just flag them</h4>
+        <p>At Holysun, discrepancies in contractor records and payments weren't escalated and forgotten — I traced each one to root cause, resolved it, and documented it for audit. That's the same loop a derivative trade break needs: investigate, liaise with the relevant desk, resolve, record.</p>
+        <div class="proof">100% payment accuracy · Zero compliance flags · 2 years</div>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="glyph">②</div>
+      <div>
+        <h4>I'm fluent in Excel-heavy, high-volume reconciliation</h4>
+        <p>Built P&amp;L and reconciliation trackers from scratch using VLOOKUP, PivotTables and IF-based logic across 50+ transactions a month and 8+ concurrent accounts. New reconciliation platforms (CTC, TriResolve, Calypso) are tools on top of a process I already know cold — I'm a fast learner on new systems.</p>
+        <div class="proof">8+ accounts reconciled in parallel · Excel-first workflows</div>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="glyph">③</div>
+      <div>
+        <h4>I work independently with front-office stakeholders</h4>
+        <p>Coordinating with 5+ project site teams to chase down cost overruns and produce variance reports for senior management is, structurally, the same skill as liaising with Front Office, Middle Office and counterparty contacts to resolve a trade break — clear communication, ownership, and follow-through without hand-holding.</p>
+        <div class="proof">5+ stakeholder teams · Proactive escalation</div>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="glyph">④</div>
+      <div>
+        <h4>I've studied the instruments, not just the process</h4>
+        <p>NISM Series XV (in progress) covers OTC derivative instruments — interest rate swaps, FX forwards, equity options and futures — directly relevant to reconciling Rates, Credit, Equity and FX activity. My CAMELS/Basel III project on Deutsche Bank also built familiarity with how banking risk and controls are evaluated end-to-end.</p>
+        <div class="proof">NISM Series XV (in progress) · CAMELS &amp; Basel III applied</div>
+      </div>
+    </div>
+
+    <div class="quote">
+      "A reconciliation isn't finished when the numbers are flagged — it's finished when someone can explain, in writing, exactly why they now match."
+      <span>— Sakshi's working approach</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="kicker">Academic Projects</div>
+    <h2>Frameworks applied <em>to real data.</em></h2>
+    <p class="intro">Both projects used five years of real financial data, applied industry-standard frameworks, and produced findings — not summaries.</p>
+
+    <div class="project">
+      <h4>Deutsche Bank vs. India's Top 10 Private Banks</h4>
+      <div class="sub">Banking Performance Analysis · CAMELS · Basel III</div>
+      <ul>
+        <li>Applied CAMELS rating framework and Basel III compliance review to 5 years of Deutsche Bank data, benchmarked against 10 Indian private sector banks.</li>
+        <li>Mapped capital adequacy and liquidity ratios against RBI-regulated peers to surface risk exposure differences.</li>
+      </ul>
+      <div class="finding"><b>Key finding:</b> Identified a 15% operational efficiency gap through ratio-based analysis — directly relevant to the kind of risk and control evaluation that underpins counterparty exposure monitoring in derivative operations.</div>
+    </div>
+
+    <div class="project">
+      <h4>Financial Statement Analysis — Colgate-Palmolive India</h4>
+      <div class="sub">5-Year Common-Size Analysis · Excel Modelling · ROE / ROIC / Margin Trends</div>
+      <ul>
+        <li>Built an advanced Excel financial model and dynamic dashboard tracking ROE, ROIC, gross margin and operational efficiency year-on-year.</li>
+      </ul>
+      <div class="finding"><b>Key finding:</b> ~3% gross margin erosion over 5 years driven by input cost inflation — supported by ratio analysis and presented with optimisation recommendations.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="education">
+  <div class="wrap">
+    <div class="kicker">Academic Background</div>
+    <h2>Commerce foundation, <em>finance specialisation.</em></h2>
+
+    <div class="edu">
+      <div class="yr">2024–26</div>
+      <div class="body"><b>Post Graduate Diploma in Management — Finance &amp; Business Analytics</b><span>ISBM, Pune · Final Year</span></div>
+    </div>
+    <div class="edu">
+      <div class="yr">2021–24</div>
+      <div class="body"><b>B.Com (Hons.) — Accounts</b><span>College of Commerce, Arts &amp; Science, Patliputra University</span></div>
+      <div class="pct">71%</div>
+    </div>
+    <div class="edu">
+      <div class="yr">2020</div>
+      <div class="body"><b>Class 12 (HSC) — Biology</b><span>St. Joseph's High School, Patna</span></div>
+      <div class="pct">66.6%</div>
+    </div>
+    <div class="edu">
+      <div class="yr">2018</div>
+      <div class="body"><b>Class 10 (SSC)</b><span>St. Joseph's High School, Patna</span></div>
+      <div class="pct">90.4%</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="letter">
+  <div class="wrap">
+    <div class="kicker">Cover Letter</div>
+    <h2>In my <em>own words.</em></h2>
+    <div class="letter">
+      <p>June 2026</p>
+      <p>Dear Hiring Team at AllianceBernstein,</p>
+      <p>I'll keep this practical. The Derivative Reconciliation Analyst role asks for someone who can sit independently from the front office, control derivative trade exposure across Rates, Credit, Equity and FX, and chase every discrepancy to a clean resolution. That description matches the work I've already been doing for two years — just not yet with derivatives in the name.</p>
+      <p>At Holysun Logistics, I owned reconciliation of contractor payments, client billing and cash flow across 50+ transactions a month — built the system from scratch, kept it at 100% accuracy, and sustained zero compliance flags for two years. For 12 of those months, I ran the entire function remotely from Pune while completing my PGDM full-time. No missed cycles, no errors.</p>
+      <p>Before that, at a CA firm in Bihar, I supported a statutory audit, reconciled 12+ months of bank records, and filed GST and tax returns for 15+ clients with zero errors. The instinct to trace a number until it matches — and document why — is one I've practised daily.</p>
+      <p>What I'm building now is the product knowledge: NISM Series XV is underway, covering interest rate swaps, FX forwards, equity options and futures — the instruments this desk reconciles every day. I haven't worked on CTC, TriResolve or Calypso specifically, and I won't pretend otherwise — but my reconciliation logic and exception-handling discipline transfer quickly, and I pick up new systems fast.</p>
+      <p>I'm based in Pune, available immediately, and ready to bring the same ownership to derivative operations that I've brought to every reconciliation I've run so far.</p>
+      <p>Warm regards,</p>
+      <p class="sign">Sakshi</p>
+      <p>pg24sakshi@isbm.ac.in · +91-9226717296</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Built for AllianceBernstein · Derivative Reconciliation Analyst · R0018678 · Pune, India<br>
+    <a href="mailto:pg24sakshi@isbm.ac.in">pg24sakshi@isbm.ac.in</a> · <a href="https://linkedin.com/in/sakshi2906">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>
