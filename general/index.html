@@ -1,1 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sakshi — Finance & Analytics</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
 
+  :root {
+    --ink: #0E1117;
+    --ink-muted: #4A5568;
+    --ink-light: #8892A4;
+    --bg: #F9F8F5;
+    --surface: #FFFFFF;
+    --gold: #C8961E;
+    --gold-light: #F6EDD4;
+    --gold-dim: #E8C87A;
+    --navy: #1A2744;
+    --accent: #2A5CDB;
+    --border: #E2E8F0;
+    --success: #0D7C59;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(249,248,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700; color: var(--navy);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--ink-muted);
+    text-decoration: none; letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-badge {
+    background: var(--success); color: white;
+    font-size: 11px; font-weight: 600; padding: 4px 12px;
+    border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 120px 40px 80px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero-inner { display: grid; grid-template-columns: 1fr 420px; gap: 80px; align-items: center; }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--gold); font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 2px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 1.08; font-weight: 900;
+    color: var(--navy); margin-bottom: 24px;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 17px; color: var(--ink-muted);
+    line-height: 1.7; max-width: 480px; margin-bottom: 36px;
+  }
+  .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--navy); color: white;
+    padding: 13px 28px; border-radius: 6px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    letter-spacing: 0.02em; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-outline {
+    border: 1.5px solid var(--border); color: var(--navy);
+    padding: 12px 24px; border-radius: 6px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--navy); }
+
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+    transition: box-shadow 0.2s;
+  }
+  .stat-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 900; color: var(--navy);
+    line-height: 1;
+  }
+  .stat-number span { font-size: 22px; color: var(--gold); }
+  .stat-label { font-size: 12px; color: var(--ink-muted); margin-top: 6px; font-weight: 500; }
+  .stat-card.accent-card {
+    background: var(--navy); border-color: var(--navy);
+  }
+  .stat-card.accent-card .stat-number { color: var(--gold-dim); }
+  .stat-card.accent-card .stat-label { color: rgba(255,255,255,0.6); }
+  .stat-highlight {
+    grid-column: 1/-1;
+    background: var(--gold-light); border-color: var(--gold-dim);
+  }
+  .stat-highlight .stat-number { color: #8C6A0A; }
+  .stat-highlight .stat-label { color: #8C6A0A; opacity: 0.8; }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--gold); font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 900; color: var(--navy);
+    line-height: 1.15; margin-bottom: 48px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  hr.divider {
+    border: none; border-top: 1px solid var(--border);
+    max-width: 1100px; margin: 0 40px;
+  }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 40px; padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { padding-top: 4px; }
+  .exp-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--gold); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .exp-company {
+    font-weight: 700; font-size: 13px; color: var(--navy);
+    margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .exp-location { font-size: 12px; color: var(--ink-light); }
+  .exp-role { font-weight: 700; font-size: 18px; color: var(--navy); margin-bottom: 12px; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .exp-bullets li {
+    font-size: 14px; color: var(--ink-muted); line-height: 1.65;
+    display: flex; gap: 10px;
+  }
+  .exp-bullets li::before {
+    content: '→'; color: var(--gold); flex-shrink: 0;
+    margin-top: 2px; font-size: 13px;
+  }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .tag {
+    background: var(--bg); border: 1px solid var(--border);
+    font-size: 11px; font-weight: 600; color: var(--ink-muted);
+    padding: 4px 10px; border-radius: 4px; letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .highlight-metric {
+    display: inline-block;
+    background: var(--gold-light);
+    color: #7A5A00;
+    font-weight: 700; padding: 2px 8px; border-radius: 4px;
+    font-size: 13px;
+  }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .skill-group {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px;
+  }
+  .skill-group-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700; color: var(--navy);
+    margin-bottom: 18px;
+  }
+  .skill-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .skill-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .skill-bar-wrap { flex: 1; margin: 0 14px; height: 4px; background: var(--bg); border-radius: 2px; overflow: hidden; }
+  .skill-bar { height: 100%; background: linear-gradient(90deg, var(--gold) 0%, var(--navy) 100%); border-radius: 2px; }
+  .skill-level { font-size: 11px; color: var(--ink-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; min-width: 60px; text-align: right; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px; position: relative; overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .project-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--navy));
+  }
+  .project-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600; color: var(--gold);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700; color: var(--navy);
+    margin-bottom: 14px; line-height: 1.3;
+  }
+  .project-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.7; margin-bottom: 16px; }
+  .project-finding {
+    background: var(--gold-light); border-left: 3px solid var(--gold);
+    padding: 12px 16px; border-radius: 4px;
+    font-size: 13px; color: #7A5A00; margin-top: 14px;
+  }
+  .project-finding strong { display: block; margin-bottom: 4px; }
+
+  /* EDUCATION */
+  .edu-timeline { position: relative; padding-left: 40px; }
+  .edu-timeline::before {
+    content: ''; position: absolute; left: 12px; top: 8px; bottom: 8px;
+    width: 1px; background: var(--border);
+  }
+  .edu-item { position: relative; margin-bottom: 40px; }
+  .edu-item::before {
+    content: ''; position: absolute; left: -32px; top: 8px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .edu-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 6px; letter-spacing: 0.08em; }
+  .edu-degree { font-weight: 700; font-size: 17px; color: var(--navy); margin-bottom: 4px; }
+  .edu-school { font-size: 14px; color: var(--ink-muted); }
+  .edu-grade { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold); background: var(--gold-light); padding: 2px 10px; border-radius: 4px; margin-top: 6px; }
+
+  /* CERTS */
+  .certs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .cert-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px 20px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .cert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .cert-name { font-size: 13px; font-weight: 600; color: var(--navy); line-height: 1.4; }
+  .cert-org { font-size: 11px; color: var(--ink-light); margin-top: 2px; }
+  .cert-status-done { color: var(--success); font-size: 11px; font-weight: 700; }
+  .cert-status-prog { color: var(--gold); font-size: 11px; font-weight: 700; }
+
+  /* CONTACT */
+  #contact {
+    background: var(--navy); color: white;
+    border-radius: 20px; padding: 80px 60px;
+    margin: 60px 40px 80px;
+    max-width: 1100px;
+    text-align: center;
+  }
+  #contact .section-label { color: var(--gold-dim); }
+  #contact .section-title { color: white; margin-bottom: 20px; }
+  #contact p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 40px; }
+  .contact-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .contact-link {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: white; padding: 12px 24px; border-radius: 8px;
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    transition: background 0.2s;
+  }
+  .contact-link:hover { background: rgba(200,150,30,0.25); border-color: var(--gold-dim); }
+
+  /* PHILOSOPHY QUOTE */
+  .philosophy-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 32px 40px;
+    margin: 48px 0;
+  }
+  .philosophy-block blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-style: italic; color: var(--navy);
+    line-height: 1.5;
+  }
+  .philosophy-block cite {
+    display: block; margin-top: 16px;
+    font-style: normal; font-size: 13px; color: var(--ink-light);
+  }
+
+  /* Offset sections so fixed nav doesn't cover headings */
+  section, #contact { scroll-margin-top: 70px; }
+  #hero { scroll-margin-top: 0; }
+
+  /* Photo avatar */
+  .avatar-wrap {
+    display: flex; justify-content: center; margin-bottom: 20px;
+  }
+  .avatar-circle {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--accent) 100%);
+    display: flex; align-items: center; justify-content: center;
+    border: 4px solid var(--gold);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    overflow: hidden;
+  }
+  .avatar-circle img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+  }
+  .avatar-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px; font-weight: 900; color: var(--gold);
+    line-height: 1; user-select: none;
+  }
+  .avatar-label {
+    text-align: center; font-size: 11px; color: var(--ink-light);
+    font-style: italic; margin-top: 8px;
+  }
+
+  @media(max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    #hero { padding: 100px 20px 60px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    section { padding: 60px 20px; }
+    hr.divider { margin: 0 20px; }
+    .exp-item { grid-template-columns: 1fr; gap: 12px; }
+    .skills-grid, .projects-grid, .certs-grid { grid-template-columns: 1fr; }
+    #contact { padding: 60px 30px; margin: 40px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">Sakshi</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-badge">Available Now</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="avatar-wrap">
+        <div>
+          <div class="avatar-circle"><img src="data:image/png;base64,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" alt="Sakshi"/></div>
+        </div>
+      </div>
+      <div class="hero-eyebrow">Finance &amp; Business Analytics</div>
+      <h1 class="hero-title">Numbers that<br/><em>drive decisions.</em></h1>
+      <p class="hero-sub">
+        Finance and Business Analytics professional with 2+ years building financial systems, 
+        owning compliance operations, and delivering insights that move organisations. 
+        Currently completing PGDM at ISBM Pune. Open to relocation.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#experience" class="btn-primary">See My Work</a>
+        <a href="mailto:pg24sakshi@isbm.ac.in" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card accent-card">
+        <div class="stat-number">30<span>%</span></div>
+        <div class="stat-label">Efficiency gain from MIS system I built</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Zero</div>
+        <div class="stat-label">Compliance flags in 2 years</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50<span>+</span></div>
+        <div class="stat-label">Monthly transactions at 100% accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">15<span>+</span></div>
+        <div class="stat-label">Tax & audit clients, zero errors</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work History</div>
+  <h2 class="section-title">Three roles.<br/><em>One standard.</em></h2>
+
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Aug 2023 – Aug 2025</div>
+        <div class="exp-company">Holysun Logistics</div>
+        <div class="exp-location">Chhattisgarh (remote from Pune)</div>
+      </div>
+      <div>
+        <div class="exp-role">Finance &amp; Compliance Associate</div>
+        <ul class="exp-bullets">
+          <li>Built an automated MIS reporting system from scratch — tracking budget vs. actual across material, labour, and equipment cost heads. Delivered a <span class="highlight-metric">30% improvement</span> in management decision-making efficiency.</li>
+          <li>Owned end-to-end cash flow monitoring, contractor payments, and client billing for <span class="highlight-metric">50+ monthly transactions</span> with 100% payment accuracy.</li>
+          <li>Coordinated with 5+ project site teams to consolidate expense data, identify cost overruns early, and produce variance reports presented directly to senior management.</li>
+          <li>Sustained full financial oversight remotely from Pune for 12 consecutive months while completing full-time PGDM — zero accuracy issues, zero reporting gaps.</li>
+          <li>Maintained audit-ready compliance records across contractor declarations and payment reconciliations — <span class="highlight-metric">zero compliance flags</span> across the entire tenure.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">MIS Reporting</span>
+          <span class="tag">FP&amp;A</span>
+          <span class="tag">Variance Analysis</span>
+          <span class="tag">Cash Flow</span>
+          <span class="tag">Compliance</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">May 2025 – Aug 2025</div>
+        <div class="exp-company">Crusha Digital</div>
+        <div class="exp-location">Bihar</div>
+      </div>
+      <div>
+        <div class="exp-role">Financial Analyst Intern</div>
+        <ul class="exp-bullets">
+          <li>Managed budgeting and financial reporting across 8+ concurrent digital marketing campaigns, tracking revenue, expenses, and cash flow with 100% month-end accuracy.</li>
+          <li>Built Excel-based campaign P&amp;L trackers using VLOOKUP and PivotTables — cost-per-acquisition visibility enabled identification of 2 underperforming campaigns.</li>
+          <li>Reconciled client invoicing across 3 accounts — zero outstanding disputes at month-end.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">P&amp;L Tracking</span>
+          <span class="tag">Excel Modelling</span>
+          <span class="tag">Campaign Finance</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Jun 2022 – Jul 2023</div>
+        <div class="exp-company">CA Firm — SSU &amp; Co.</div>
+        <div class="exp-location">Bihar</div>
+      </div>
+      <div>
+        <div class="exp-role">Accounts &amp; Tax Intern</div>
+        <ul class="exp-bullets">
+          <li>Supported statutory audit of Patliputra Cooperative Bank — prepared audit working papers, reconciled 12+ months of financial records, contributed to final report.</li>
+          <li>Filed GST returns (GSTR-1 &amp; GSTR-3B) and income tax returns for <span class="highlight-metric">15+ clients</span> — zero errors across all submissions.</li>
+          <li>Maintained balance sheets, P&amp;L statements, and bank reconciliation statements for 10+ clients simultaneously, 100% deadline compliance.</li>
+          <li>Evaluated creditworthiness of 20+ loan applicants by preparing financial background summaries covering income, liability, and repayment capacity.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Statutory Audit</span>
+          <span class="tag">GST Filing</span>
+          <span class="tag">Credit Assessment</span>
+          <span class="tag">Bank Recon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Capabilities</div>
+  <h2 class="section-title">What I actually <em>know how to do.</em></h2>
+
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Financial Modelling &amp; FP&amp;A</div>
+      <div class="skill-row"><span class="skill-name">Advanced Excel (VLOOKUP, PivotTables)</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div><span class="skill-level">Expert</span></div>
+      <div class="skill-row"><span class="skill-name">Budget vs. Actual Analysis</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div><span class="skill-level">Expert</span></div>
+      <div class="skill-row"><span class="skill-name">Dynamic Dashboards</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span class="skill-level">Advanced</span></div>
+      <div class="skill-row"><span class="skill-name">Financial Statement Analysis</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span class="skill-level">Advanced</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Reporting &amp; Automation</div>
+      <div class="skill-row"><span class="skill-name">MIS Reporting</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div><span class="skill-level">Expert</span></div>
+      <div class="skill-row"><span class="skill-name">Variance &amp; Cost Control</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div><span class="skill-level">Expert</span></div>
+      <div class="skill-row"><span class="skill-name">Power BI</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:45%"></div></div><span class="skill-level">Building</span></div>
+      <div class="skill-row"><span class="skill-name">Tally ERP</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:40%"></div></div><span class="skill-level">Building</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Audit &amp; Compliance</div>
+      <div class="skill-row"><span class="skill-name">Statutory Audit Support</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span class="skill-level">Advanced</span></div>
+      <div class="skill-row"><span class="skill-name">GST Returns (GSTR-1/3B)</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span class="skill-level">Advanced</span></div>
+      <div class="skill-row"><span class="skill-name">Bank Reconciliation</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div><span class="skill-level">Expert</span></div>
+      <div class="skill-row"><span class="skill-name">Income Tax Returns</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div><span class="skill-level">Advanced</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Banking &amp; Analytics</div>
+      <div class="skill-row"><span class="skill-name">CAMELS Framework</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div><span class="skill-level">Advanced</span></div>
+      <div class="skill-row"><span class="skill-name">Basel III Compliance</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div><span class="skill-level">Proficient</span></div>
+      <div class="skill-row"><span class="skill-name">P&amp;L Reconciliation</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span class="skill-level">Advanced</span></div>
+      <div class="skill-row"><span class="skill-name">Credit Assessment</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div><span class="skill-level">Proficient</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Academic Projects</div>
+  <h2 class="section-title">Analysis, not <em>just assignments.</em></h2>
+
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-tag">Banking Performance · CAMELS · Basel III</div>
+      <div class="project-title">Deutsche Bank vs. India's Top 10 Private Banks</div>
+      <p class="project-desc">Applied CAMELS rating framework and Basel III compliance review to 5 years of Deutsche Bank data, benchmarked against 10 Indian private sector banks across capital adequacy, asset quality, earnings, and liquidity metrics.</p>
+      <ul class="exp-bullets">
+        <li>Evaluated capital adequacy, asset quality, earnings, and liquidity across RBI-regulated peers</li>
+        <li>Mapped Deutsche Bank's capital adequacy and liquidity ratios to surface risk exposure differences</li>
+        <li>Delivered structured management report with specific improvement recommendations</li>
+      </ul>
+      <div class="project-finding">
+        <strong>Key Finding</strong>
+        Identified a 15% operational efficiency gap through ratio-based analysis — explained through capital adequacy and liquidity divergences between Deutsche Bank and Indian benchmarks.
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-tag">5-Year Analysis · Excel Modelling · ROE / ROIC</div>
+      <div class="project-title">Financial Statement Analysis — Colgate-Palmolive India</div>
+      <p class="project-desc">Conducted 5-year common-size analysis of income statements and balance sheets to track revenue trends, cost structure shifts, and margin compression across business cycles.</p>
+      <ul class="exp-bullets">
+        <li>Built advanced Excel financial model and dynamic dashboard tracking ROE, ROIC, gross margin, and operational efficiency</li>
+        <li>Identified gross margin erosion over the analysis period driven by rising input costs</li>
+        <li>Presented strategic cost optimisation recommendations to faculty evaluation panel</li>
+      </ul>
+      <div class="project-finding">
+        <strong>Key Finding</strong>
+        ~3% gross margin erosion over 5 years driven by input cost inflation — with specific optimisation recommendations supported by ratio analysis.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Academic Background</div>
+  <h2 class="section-title">Built on a <em>commerce foundation.</em></h2>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
+    <div>
+      <div class="edu-timeline">
+        <div class="edu-item">
+          <div class="edu-year">2024 – 2026</div>
+          <div class="edu-degree">PGDM — Finance &amp; Business Analytics</div>
+          <div class="edu-school">ISBM, Pune · Final Year</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-year">2021 – 2024</div>
+          <div class="edu-degree">B.Com (Hons.) — Accounts</div>
+          <div class="edu-school">Patliputra University</div>
+          <div class="edu-grade">71%</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-year">2020</div>
+          <div class="edu-degree">Class 12 (HSC) — Biology</div>
+          <div class="edu-school">St. Joseph's High School, Patna</div>
+          <div class="edu-grade">66.6%</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-year">2018</div>
+          <div class="edu-degree">Class 10 (SSC)</div>
+          <div class="edu-school">St. Joseph's High School, Patna</div>
+          <div class="edu-grade">90.4%</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="certs-grid" style="grid-template-columns: 1fr; gap: 10px;">
+        <div class="cert-item">
+          <div class="cert-icon">✅</div>
+          <div><div class="cert-name">CPBFI — Certified Professional in Banking, Finance &amp; Insurance</div><div class="cert-org">Bajaj Finserv · <span class="cert-status-done">Completed</span></div></div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">✅</div>
+          <div><div class="cert-name">NISM SEBI Investor Awareness Test</div><div class="cert-org">NISM · <span class="cert-status-done">Completed</span></div></div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">✅</div>
+          <div><div class="cert-name">NISM — Listing of Social Stock Exchange</div><div class="cert-org">NISM · <span class="cert-status-done">Completed</span></div></div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">✅</div>
+          <div><div class="cert-name">TCS iON Career Edge — Young Professional</div><div class="cert-org">TCS · <span class="cert-status-done">Completed</span></div></div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">⏳</div>
+          <div><div class="cert-name">NISM Series XV — Research Analyst</div><div class="cert-org">NISM · <span class="cert-status-prog">In Progress</span></div></div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">⏳</div>
+          <div><div class="cert-name">NISM Series XXI-B — Portfolio Management Services</div><div class="cert-org">NISM · <span class="cert-status-prog">In Progress</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="philosophy-block" style="margin-top:60px">
+    <blockquote>"Finance isn't about spreadsheets. It's about the decisions those spreadsheets enable."</blockquote>
+    <cite>— Working philosophy</cite>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact" style="background:var(--navy);border-radius:20px;padding:80px 60px;margin:60px 40px 80px;max-width:1100px;text-align:center;scroll-margin-top:70px;">
+  <div class="section-label" style="color: var(--gold-dim);">Get in Touch</div>
+  <h2 class="section-title" style="color: white;">Open to opportunities.<br/><em style="color:var(--gold-dim)">Available now.</em></h2>
+  <p style="color:rgba(255,255,255,0.65);font-size:16px;margin-bottom:40px;">Finance roles, analytics positions, or banking operations — I'm open to relocation and available immediately.</p>
+  <div class="contact-links">
+    <a href="mailto:pg24sakshi@isbm.ac.in" class="contact-link">📧 pg24sakshi@isbm.ac.in</a>
+    <a href="tel:+919226717296" class="contact-link">📞 +91 92267 17296</a>
+    <a href="tel:+918207319683" class="contact-link">📞 +91 82073 19683</a>
+    <a href="https://linkedin.com/in/sakshi2906" class="contact-link" target="_blank">🔗 linkedin.com/in/sakshi2906</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  const NAV_HEIGHT = 65;
+
+  // ── All anchor links (nav + hero CTA) ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - NAV_HEIGHT, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ── Active nav highlight on scroll ──
+  const sections = Array.from(document.querySelectorAll('section[id], div[id]'));
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  function updateActiveNav() {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - NAV_HEIGHT - 10) current = sec.id;
+    });
+    navLinks.forEach(a => {
+      const isActive = a.getAttribute('href') === '#' + current;
+      a.style.color = isActive ? 'var(--gold)' : '';
+    });
+  }
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+})();
+</script>
+</body>
+</html>
