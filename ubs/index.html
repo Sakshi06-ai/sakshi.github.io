@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sakshi — UBS Candidate Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --ubs-red: #E60028;
+    --ubs-red-dark: #B8001E;
+    --ubs-red-soft: rgba(230, 0, 40, 0.08);
+    --ubs-black: #000000;
+    --ubs-near-black: #111111;
+    --ubs-dark: #1A1A1A;
+    --ubs-mid: #3D3D3D;
+    --ubs-muted: #6B6B6B;
+    --ubs-light: #9A9A9A;
+    --ubs-border: #E0E0E0;
+    --ubs-bg: #F7F7F7;
+    --ubs-surface: #FFFFFF;
+    --ubs-surface-alt: #F2F2F2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--ubs-surface);
+    color: var(--ubs-dark);
+    font-size: 15px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* TOP BAR — UBS-style global header */
+  .ubs-topbar {
+    background: var(--ubs-black);
+    color: white;
+    height: 44px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    font-size: 11px; letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+  .ubs-topbar-links { display: flex; gap: 28px; }
+  .ubs-topbar-links a { color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.2s; }
+  .ubs-topbar-links a:hover { color: white; }
+  .ubs-topbar-right { color: rgba(255,255,255,0.5); font-size: 11px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: white;
+    border-bottom: 3px solid var(--ubs-red);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 68px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .nav-left { display: flex; align-items: center; gap: 32px; }
+  .nav-logo-wrap { display: flex; align-items: center; gap: 16px; }
+  .ubs-key {
+    font-size: 36px; font-weight: 900; font-style: italic;
+    color: var(--ubs-red);
+    font-family: 'Source Serif 4', serif;
+    line-height: 1; letter-spacing: -2px;
+  }
+  .nav-brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-brand-name { font-size: 11px; font-weight: 700; color: var(--ubs-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-brand-role { font-size: 14px; font-weight: 600; color: var(--ubs-dark); }
+  .nav-divider { width: 1px; height: 32px; background: var(--ubs-border); }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--ubs-muted);
+    text-decoration: none; padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ubs-red); border-bottom-color: var(--ubs-red); }
+  .nav-badge {
+    background: var(--ubs-red); color: white;
+    font-size: 11px; font-weight: 700; padding: 5px 14px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  /* HERO */
+  .hero-section {
+    background: var(--ubs-black);
+    color: white;
+    padding: 80px 48px 0;
+    position: relative; overflow: hidden;
+  }
+  .hero-section::before {
+    content: 'UBS';
+    position: absolute; right: -20px; top: -40px;
+    font-size: 280px; font-weight: 900;
+    color: rgba(255,255,255,0.03);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -10px; pointer-events: none;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: end; }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700; color: var(--ubs-red);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--ubs-red); }
+  .hero-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    font-weight: 700; line-height: 1.1;
+    color: white; margin-bottom: 24px;
+  }
+  .hero-title em { font-style: italic; color: var(--ubs-red); }
+  .hero-sub { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 36px; max-width: 520px; }
+  .hero-cta-row { display: flex; gap: 14px; padding-bottom: 60px; }
+  .btn-ubs-primary {
+    background: var(--ubs-red); color: white;
+    padding: 13px 28px; border-radius: 2px;
+    font-size: 13px; font-weight: 700; text-decoration: none;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: background 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ubs-primary:hover { background: var(--ubs-red-dark); }
+  .btn-ubs-ghost {
+    border: 1.5px solid rgba(255,255,255,0.25); color: white;
+    padding: 12px 24px; border-radius: 2px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: border-color 0.2s;
+  }
+  .btn-ubs-ghost:hover { border-color: white; }
+
+  .hero-stats-col {
+    background: var(--ubs-red);
+    padding: 36px 32px;
+    align-self: stretch; display: flex; flex-direction: column; justify-content: center;
+    gap: 28px;
+  }
+  .hstat { border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 24px; }
+  .hstat:last-child { border-bottom: none; padding-bottom: 0; }
+  .hstat-num {
+    font-family: 'Source Serif 4', serif;
+    font-size: 42px; font-weight: 700; color: white; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .hstat-label { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 500; }
+
+  /* UBS DIVISION BANNER */
+  .division-banner {
+    background: var(--ubs-bg);
+    border-bottom: 1px solid var(--ubs-border);
+    padding: 0 48px;
+  }
+  .division-banner-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; gap: 0;
+  }
+  .division-tab {
+    padding: 18px 32px;
+    font-size: 12px; font-weight: 600;
+    color: var(--ubs-muted); letter-spacing: 0.06em; text-transform: uppercase;
+    border-right: 1px solid var(--ubs-border);
+    cursor: pointer; transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+  }
+  .division-tab:hover { color: var(--ubs-red); }
+  .division-tab.active { color: var(--ubs-red); border-bottom-color: var(--ubs-red); background: white; }
+
+  /* MAIN CONTENT */
+  .main-wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  /* SECTION HEADINGS */
+  .sec-eyebrow {
+    font-size: 10px; font-weight: 700; color: var(--ubs-red);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .sec-eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--ubs-red); }
+  .sec-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 700; color: var(--ubs-near-black);
+    line-height: 1.15; margin-bottom: 10px;
+  }
+  .sec-sub { font-size: 15px; color: var(--ubs-muted); margin-bottom: 48px; max-width: 600px; }
+
+  section.content-sec { scroll-margin-top: 116px; }
+  #why-ubs { scroll-margin-top: 116px; }
+
+  /* Photo avatar */
+  .hero-avatar {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: linear-gradient(135deg, #3a0010 0%, var(--ubs-red) 100%);
+    display: flex; align-items: center; justify-content: center;
+    border: 3px solid rgba(255,255,255,0.2);
+    margin-bottom: 20px; overflow: hidden;
+  }
+  .hero-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .hero-avatar-initials {
+    font-family: 'Source Serif 4', serif;
+    font-size: 40px; font-weight: 700; color: white; line-height: 1;
+  }
+  .avatar-replace-note { font-size: 10px; color: rgba(255,255,255,0.3); font-style: italic; margin-bottom: 16px; }
+
+  section.content-sec { padding: 80px 0; border-bottom: 1px solid var(--ubs-border); }
+  section.content-sec:last-child { border-bottom: none; }
+
+  /* UBS SERVICE MAPPING — the unique element */
+  .ubs-mapping-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;
+  }
+  .ubs-division-card {
+    border: 1px solid var(--ubs-border);
+    background: white;
+    padding: 0; overflow: hidden;
+  }
+  .udc-header {
+    background: var(--ubs-near-black);
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .udc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ubs-red); flex-shrink: 0; }
+  .udc-division { font-size: 11px; font-weight: 700; color: var(--ubs-red); letter-spacing: 0.12em; text-transform: uppercase; }
+  .udc-role { font-size: 13px; color: white; font-weight: 600; margin-left: auto; }
+  .udc-body { padding: 24px; }
+  .udc-service-label { font-size: 11px; font-weight: 700; color: var(--ubs-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .udc-service-name { font-size: 16px; font-weight: 700; color: var(--ubs-dark); margin-bottom: 12px; }
+  .udc-desc { font-size: 13px; color: var(--ubs-muted); line-height: 1.65; margin-bottom: 14px; }
+  .udc-connection {
+    background: var(--ubs-red-soft);
+    border-left: 3px solid var(--ubs-red);
+    padding: 10px 14px;
+    font-size: 12px; color: var(--ubs-dark);
+    line-height: 1.55;
+  }
+  .udc-connection strong { color: var(--ubs-red); font-size: 11px; display: block; margin-bottom: 3px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* EXPERIENCE */
+  .exp-item { padding: 40px 0; border-bottom: 1px solid var(--ubs-border); display: grid; grid-template-columns: 220px 1fr; gap: 48px; }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-period { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ubs-red); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .exp-company { font-weight: 700; font-size: 12px; color: var(--ubs-dark); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .exp-location { font-size: 12px; color: var(--ubs-light); }
+  .exp-role { font-family: 'Source Serif 4', serif; font-size: 20px; font-weight: 700; color: var(--ubs-near-black); margin-bottom: 14px; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .exp-bullets li { font-size: 14px; color: var(--ubs-mid); line-height: 1.65; display: flex; gap: 10px; }
+  .exp-bullets li::before { content: '—'; color: var(--ubs-red); flex-shrink: 0; font-weight: 700; }
+  .exp-metric { display: inline-block; background: var(--ubs-red-soft); color: var(--ubs-red); font-weight: 700; padding: 2px 8px; border-radius: 2px; font-size: 13px; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .exp-tag { background: var(--ubs-bg); border: 1px solid var(--ubs-border); font-size: 10px; font-weight: 700; color: var(--ubs-muted); padding: 4px 10px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .ubs-relevance {
+    background: var(--ubs-near-black); color: white;
+    padding: 10px 14px; margin-top: 14px; font-size: 12px;
+    display: flex; gap: 8px; align-items: flex-start;
+    border-radius: 2px;
+  }
+  .ubs-relevance-tag { background: var(--ubs-red); color: white; font-size: 10px; font-weight: 700; padding: 2px 8px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+
+  /* SKILLS TABLE */
+  .skills-table-wrap { border: 1px solid var(--ubs-border); overflow: hidden; }
+  .skills-table { width: 100%; border-collapse: collapse; }
+  .skills-table th { background: var(--ubs-near-black); color: white; font-size: 11px; font-weight: 700; padding: 14px 20px; text-align: left; text-transform: uppercase; letter-spacing: 0.1em; }
+  .skills-table td { padding: 14px 20px; font-size: 13px; border-bottom: 1px solid var(--ubs-border); vertical-align: top; }
+  .skills-table tr:last-child td { border-bottom: none; }
+  .skills-table tr:nth-child(even) td { background: var(--ubs-bg); }
+  .skill-level-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 2px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .level-expert { background: #002f1a; color: #00C868; }
+  .level-advanced { background: #001f30; color: #4DB8FF; }
+  .level-proficient { background: #1a1500; color: #FFB800; }
+  .level-building { background: #1a0a00; color: #FF8040; }
+  .ubs-skill-link { color: var(--ubs-red); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+
+  /* PROJECTS */
+  .project-card {
+    border: 1px solid var(--ubs-border);
+    background: white; margin-bottom: 24px; overflow: hidden;
+  }
+  .pc-banner { background: var(--ubs-near-black); padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .pc-tag { font-size: 10px; font-weight: 700; color: var(--ubs-red); letter-spacing: 0.12em; text-transform: uppercase; }
+  .pc-ubs-label { background: var(--ubs-red); color: white; font-size: 10px; font-weight: 700; padding: 4px 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .pc-body { padding: 32px; display: grid; grid-template-columns: 1fr 280px; gap: 40px; }
+  .pc-title { font-family: 'Source Serif 4', serif; font-size: 22px; font-weight: 700; color: var(--ubs-near-black); margin-bottom: 12px; }
+  .pc-desc { font-size: 14px; color: var(--ubs-muted); line-height: 1.7; margin-bottom: 16px; }
+  .pc-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .pc-bullets li { font-size: 13px; color: var(--ubs-mid); display: flex; gap: 8px; }
+  .pc-bullets li::before { content: '→'; color: var(--ubs-red); flex-shrink: 0; }
+  .pc-sidebar { background: var(--ubs-bg); padding: 24px; border-left: 1px solid var(--ubs-border); }
+  .pc-sidebar-label { font-size: 10px; font-weight: 700; color: var(--ubs-red); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .pc-sidebar-service { font-weight: 700; font-size: 14px; color: var(--ubs-dark); margin-bottom: 10px; }
+  .pc-sidebar-text { font-size: 12px; color: var(--ubs-muted); line-height: 1.6; margin-bottom: 16px; }
+  .pc-finding { background: white; border: 1px solid var(--ubs-border); border-left: 3px solid var(--ubs-red); padding: 12px 16px; font-size: 12px; color: var(--ubs-dark); line-height: 1.6; }
+  .pc-finding strong { color: var(--ubs-red); font-size: 10px; display: block; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+
+  /* EDUCATION / CERTS */
+  .edu-certs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .edu-list { display: flex; flex-direction: column; gap: 24px; }
+  .edu-row { display: flex; gap: 20px; align-items: flex-start; }
+  .edu-year-box { background: var(--ubs-red); color: white; font-size: 11px; font-weight: 700; padding: 6px 12px; text-align: center; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.04em; }
+  .edu-degree { font-weight: 700; font-size: 15px; color: var(--ubs-dark); margin-bottom: 3px; }
+  .edu-school { font-size: 13px; color: var(--ubs-muted); }
+  .edu-grade { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ubs-red); margin-top: 4px; }
+  .cert-list { display: flex; flex-direction: column; gap: 10px; }
+  .cert-row { background: var(--ubs-bg); border: 1px solid var(--ubs-border); padding: 12px 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .cert-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+  .cert-dot.done { background: #00C868; }
+  .cert-dot.prog { background: var(--ubs-red); }
+  .cert-name { font-size: 13px; font-weight: 600; color: var(--ubs-dark); line-height: 1.4; }
+  .cert-status { font-size: 11px; margin-top: 2px; font-weight: 600; }
+  .cert-status.done { color: #00C868; }
+  .cert-status.prog { color: var(--ubs-red); }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--ubs-near-black); color: white;
+    padding: 80px 48px;
+    margin-top: 80px;
+  }
+  .contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .contact-title { font-family: 'Source Serif 4', serif; font-size: 40px; font-weight: 700; color: white; margin-bottom: 16px; }
+  .contact-title em { font-style: italic; color: var(--ubs-red); }
+  .contact-sub { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 32px; }
+  .contact-links { display: flex; flex-direction: column; gap: 12px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: white; padding: 14px 20px; text-decoration: none;
+    font-size: 14px; font-weight: 500; border-left: 3px solid var(--ubs-red);
+    transition: background 0.2s;
+  }
+  .contact-link:hover { background: rgba(230,0,40,0.12); }
+  .ubs-disclaimer { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.6; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 40px; }
+
+  .ubs-footer {
+    background: black; padding: 24px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ubs-footer-logo { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
+  .ubs-footer-note { font-size: 11px; color: rgba(255,255,255,0.25); }
+
+  /* UBS Why Section */
+  .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--ubs-border); border: 1px solid var(--ubs-border); }
+  .why-item { background: white; padding: 36px 32px; }
+  .why-num { font-family: 'Source Serif 4', serif; font-size: 48px; font-weight: 700; color: var(--ubs-red); opacity: 0.2; line-height: 1; margin-bottom: 4px; }
+  .why-title { font-weight: 700; font-size: 16px; color: var(--ubs-dark); margin-bottom: 10px; }
+  .why-desc { font-size: 13px; color: var(--ubs-muted); line-height: 1.7; }
+  .why-metric { margin-top: 12px; background: var(--ubs-red-soft); border-left: 2px solid var(--ubs-red); padding: 8px 14px; font-size: 12px; color: var(--ubs-dark); }
+
+  @media(max-width: 768px) {
+    .ubs-topbar { padding: 0 20px; }
+    .ubs-topbar-links { display: none; }
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero-section { padding: 60px 20px 0; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-stats-col { flex-direction: row; flex-wrap: wrap; padding: 24px 20px; }
+    .division-banner { padding: 0 20px; overflow-x: auto; }
+    .main-wrap { padding: 0 20px; }
+    .ubs-mapping-row, .pc-body, .edu-certs-grid, .contact-inner, .why-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 12px; }
+    .contact-section { padding: 60px 20px; }
+    .ubs-footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="ubs-topbar">
+  <div class="ubs-topbar-links">
+    <a href="#why-ubs">Wealth Management</a>
+    <a href="#projects">Investment Bank</a>
+    <a href="#skills">Asset Management</a>
+    <a href="#why-ubs">Group Functions</a>
+  </div>
+  <div class="ubs-topbar-right">Candidate Portfolio · Finance &amp; Analytics · 2026</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <div class="nav-logo-wrap">
+      <div class="ubs-key">𝘜𝘉𝘚</div>
+      <div class="nav-divider"></div>
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">Candidate Portfolio</span>
+        <span class="nav-brand-role">Sakshi — Finance &amp; Analytics</span>
+      </div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#why-ubs">Why UBS</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+  <span class="nav-badge">Available Now</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero-section">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-avatar">
+        <img src="data:image/png;base64,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" alt="Sakshi"/>
+      </div>
+      <div class="hero-eyebrow">Finance &amp; Business Analytics · PGDM 2026</div>
+      <h1 class="hero-title">Controls-first<br/>finance for<br/><em>a global bank.</em></h1>
+      <p class="hero-sub">
+        Two years building financial systems from scratch, surviving audits without a single flag, and running a live finance function remotely — all while completing a full-time PGDM. This is my case for UBS.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#why-ubs" class="btn-ubs-primary">Why UBS →</a>
+        <a href="mailto:pg24sakshi@isbm.ac.in" class="btn-ubs-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-stats-col">
+      <div class="hstat">
+        <div class="hstat-num">30%</div>
+        <div class="hstat-label">↑ efficiency gain from MIS system I built at Holysun</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">Zero</div>
+        <div class="hstat-label">Compliance flags across entire 2-year tenure</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">50+</div>
+        <div class="hstat-label">Monthly transactions managed at 100% accuracy</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIVISION TABS -->
+<div class="division-banner">
+  <div class="division-banner-inner">
+    <div class="division-tab active">Group Functions / Finance</div>
+    <div class="division-tab">Investment Bank</div>
+    <div class="division-tab">Wealth Management</div>
+    <div class="division-tab">Asset Management</div>
+    <div class="division-tab">Risk &amp; Compliance</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-wrap">
+
+<!-- WHY UBS — UBS SERVICES MAPPED TO SKILLS -->
+<section class="content-sec" id="why-ubs">
+  <div class="sec-eyebrow">Why UBS</div>
+  <h2 class="sec-title">My skills mapped to<br/>UBS divisions &amp; services</h2>
+  <p class="sec-sub">Not generic strengths — a direct map between what I have built and what each UBS division needs.</p>
+
+  <div class="ubs-mapping-row">
+    <div class="ubs-division-card">
+      <div class="udc-header">
+        <div class="udc-dot"></div>
+        <div class="udc-division">Group Functions — Finance</div>
+        <div class="udc-role">Product Control / Finance Analyst</div>
+      </div>
+      <div class="udc-body">
+        <div class="udc-service-label">UBS Service</div>
+        <div class="udc-service-name">P&amp;L Control &amp; Financial Reporting</div>
+        <p class="udc-desc">UBS Group Functions Finance runs daily P&amp;L attribution, month-end close processes, balance sheet substantiation, and management reporting across the Investment Bank and Group entities — requiring precision, ownership, and regulatory accuracy.</p>
+        <div class="udc-connection">
+          <strong>My Direct Connection</strong>
+          Built and owned a full MIS reporting cycle at Holysun — budget vs. actual, cost variance, cash flow — with zero errors over 12 months of remote operation. This is P&amp;L control discipline at its core. My Deutsche Bank CAMELS project also directly maps to the capital adequacy and ratio monitoring that Group Finance tracks.
+        </div>
+      </div>
+    </div>
+    <div class="ubs-division-card">
+      <div class="udc-header">
+        <div class="udc-dot"></div>
+        <div class="udc-division">Investment Bank</div>
+        <div class="udc-role">Research / Analytics Associate</div>
+      </div>
+      <div class="udc-body">
+        <div class="udc-service-label">UBS Service</div>
+        <div class="udc-service-name">UBS Evidence Lab &amp; Research Analytics</div>
+        <p class="udc-desc">UBS Evidence Lab aggregates and analyses alternative datasets to support Investment Bank research. UBS Research produces sector-deep analysis across global equities and credit — requiring strong financial modelling and analytical rigour.</p>
+        <div class="udc-connection">
+          <strong>My Direct Connection</strong>
+          My Colgate-Palmolive 5-year financial model — common-size analysis, ROE/ROIC tracking, dynamic dashboards — mirrors the kind of structured financial research UBS analysts produce. I surface the numbers and build the narrative from them, which is the core of UBS Research.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ubs-mapping-row">
+    <div class="ubs-division-card">
+      <div class="udc-header">
+        <div class="udc-dot"></div>
+        <div class="udc-division">Risk &amp; Compliance</div>
+        <div class="udc-role">Regulatory / Compliance Analyst</div>
+      </div>
+      <div class="udc-body">
+        <div class="udc-service-label">UBS Service</div>
+        <div class="udc-service-name">UBS Regulatory Reporting &amp; Basel III Compliance</div>
+        <p class="udc-desc">UBS operates under stringent FINMA, FCA, and global regulatory frameworks. Its compliance teams handle Basel III capital adequacy monitoring, regulatory returns, and internal control validation — requiring zero tolerance for error.</p>
+        <div class="udc-connection">
+          <strong>My Direct Connection</strong>
+          Two years. Zero compliance flags. GST filings, contractor declarations, payment reconciliations — all audit-ready at all times. My Deutsche Bank project applied Basel III capital adequacy and liquidity ratios to real data. Regulatory precision is a reflex for me, not a checklist.
+        </div>
+      </div>
+    </div>
+    <div class="ubs-division-card">
+      <div class="udc-header">
+        <div class="udc-dot"></div>
+        <div class="udc-division">Global Wealth Management</div>
+        <div class="udc-role">Client Analytics / CIO Support</div>
+      </div>
+      <div class="udc-body">
+        <div class="udc-service-label">UBS Service</div>
+        <div class="udc-service-name">UBS Chief Investment Office (CIO) &amp; WM Analytics</div>
+        <p class="udc-desc">UBS CIO produces macro and asset-class research that drives advice across 3,000+ financial advisors globally. Supporting analysts build models, analyse financial statements, and track market indicators to inform client portfolios.</p>
+        <div class="udc-connection">
+          <strong>My Direct Connection</strong>
+          My creditworthiness assessments of 20+ loan applicants at the CA firm — income, liability, repayment capacity — are structured financial analysis of the same kind CIO support roles require. I also hold NISM SEBI Investor Awareness and am pursuing NISM Series XV (Research Analyst).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY GRID -->
+  <div class="why-grid" style="margin-top: 40px;">
+    <div class="why-item">
+      <div class="why-num">01</div>
+      <div class="why-title">I build controls, not just spreadsheets</div>
+      <p class="why-desc">At Holysun, I designed the entire MIS reporting system — budget tracking, variance analysis, cash flow monitoring. I didn't inherit it. I built it. UBS Group Finance needs people who own a process, not just execute one.</p>
+      <div class="why-metric">30% efficiency gain · 0 errors over 12 months</div>
+    </div>
+    <div class="why-item">
+      <div class="why-num">02</div>
+      <div class="why-title">Regulatory compliance is a reflex</div>
+      <p class="why-desc">FINMA and FCA scrutiny demand the same muscle I trained across GST filings, contractor declarations, and statutory audit support. UBS's compliance culture is exactly what I've been building toward.</p>
+      <div class="why-metric">Zero compliance flags · 15+ tax returns error-free</div>
+    </div>
+    <div class="why-item">
+      <div class="why-num">03</div>
+      <div class="why-title">I understand how banks are evaluated</div>
+      <p class="why-desc">My Deutsche Bank project used CAMELS ratings and Basel III compliance on 5 years of real data, benchmarked against 10 Indian private banks. The frameworks I applied — capital adequacy, liquidity, earnings — are the same ones UBS CFO Group monitors.</p>
+      <div class="why-metric">15% efficiency gap identified · Basel III applied to real data</div>
+    </div>
+    <div class="why-item">
+      <div class="why-num">04</div>
+      <div class="why-title">I deliver under pressure, at a distance</div>
+      <p class="why-desc">I ran a live finance function for 12 consecutive months remotely from Pune while completing full-time PGDM. UBS operates across 50+ countries. Cross-timezone, high-accountability delivery is something I've already proven.</p>
+      <div class="why-metric">12 months remote · 0 missed cycles · Full-time PGDM simultaneously</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="content-sec" id="experience">
+  <div class="sec-eyebrow">Work History</div>
+  <h2 class="sec-title">Roles with evidence.</h2>
+  <p class="sec-sub">Every position mapped to the UBS discipline it directly prepares for.</p>
+
+  <div>
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">Aug 2023 – Aug 2025</div>
+        <div class="exp-company">Holysun Logistics</div>
+        <div class="exp-location">Chhattisgarh</div>
+      </div>
+      <div>
+        <div class="exp-role">Finance &amp; Compliance Associate</div>
+        <ul class="exp-bullets">
+          <li>Built an automated MIS reporting system from scratch — tracking budget vs. actual across material, labour, and equipment. Delivered a <span class="exp-metric">30% improvement</span> in management decision-making efficiency.</li>
+          <li>Owned end-to-end cash flow monitoring, contractor payments, and client billing for <span class="exp-metric">50+ monthly transactions</span> with 100% payment accuracy.</li>
+          <li>Coordinated with 5+ project site teams to consolidate monthly expense data, identify cost overruns early, and produce variance reports for senior management.</li>
+          <li>Sustained full financial oversight remotely from Pune for 12 consecutive months while completing full-time PGDM — <span class="exp-metric">zero accuracy issues, zero reporting gaps.</span></li>
+          <li>Maintained audit-ready compliance records — <span class="exp-metric">zero compliance flags</span> across two-year tenure.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">MIS Reporting</span>
+          <span class="exp-tag">FP&amp;A</span>
+          <span class="exp-tag">Variance Analysis</span>
+          <span class="exp-tag">Cash Flow</span>
+          <span class="exp-tag">Compliance</span>
+        </div>
+        <div class="ubs-relevance">
+          <span class="ubs-relevance-tag">UBS Relevance</span>
+          <span>P&amp;L control, month-end close, management reporting — directly mirrors UBS Group Finance / Product Control workflows. The MIS system I built is the exact discipline UBS CFO Group needs in a junior analyst.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">May 2025 – Aug 2025</div>
+        <div class="exp-company">Crusha Digital</div>
+        <div class="exp-location">Bihar</div>
+      </div>
+      <div>
+        <div class="exp-role">Financial Analyst Intern</div>
+        <ul class="exp-bullets">
+          <li>Managed budgeting and financial reporting across 8+ concurrent campaigns, tracking revenue, expenses, and cash flow with 100% month-end accuracy.</li>
+          <li>Built Excel-based campaign P&amp;L trackers using VLOOKUP and PivotTables — identified 2 underperforming campaigns, enabling budget reallocation decisions.</li>
+          <li>Reconciled client invoicing across 3 accounts — zero outstanding disputes at month-end.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">P&amp;L Tracking</span>
+          <span class="exp-tag">Excel Modelling</span>
+          <span class="exp-tag">Reconciliation</span>
+        </div>
+        <div class="ubs-relevance">
+          <span class="ubs-relevance-tag">UBS Relevance</span>
+          <span>Multi-entity financial tracking and reconciliation maps to UBS Investment Bank reconciliation and client reporting workflows in Global Markets operations.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">Jun 2022 – Jul 2023</div>
+        <div class="exp-company">SSU &amp; Co. (CA Firm)</div>
+        <div class="exp-location">Bihar</div>
+      </div>
+      <div>
+        <div class="exp-role">Accounts &amp; Tax Intern</div>
+        <ul class="exp-bullets">
+          <li>Supported statutory audit of Patliputra Cooperative Bank — working papers, 12+ months of record reconciliation, final report compilation.</li>
+          <li>Filed GSTR-1, GSTR-3B, and income tax returns for <span class="exp-metric">15+ clients</span> — zero errors across all submissions.</li>
+          <li>Maintained balance sheets, P&amp;Ls, and bank reconciliations for 10+ clients simultaneously with 100% deadline compliance.</li>
+          <li>Evaluated creditworthiness of <span class="exp-metric">20+ loan applicants</span> — income, liability, and repayment capacity assessments supporting senior CA lending decisions.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="exp-tag">Statutory Audit</span>
+          <span class="exp-tag">GST / ITR</span>
+          <span class="exp-tag">Credit Assessment</span>
+          <span class="exp-tag">Bank Recon</span>
+        </div>
+        <div class="ubs-relevance">
+          <span class="ubs-relevance-tag">UBS Relevance</span>
+          <span>Statutory audit and credit assessment experience is directly transferable to UBS's internal audit functions and its Wealth Management credit advisory workflows. Regulatory filing discipline maps to UBS compliance operations.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="content-sec" id="skills">
+  <div class="sec-eyebrow">Capabilities</div>
+  <h2 class="sec-title">Skills with UBS context.</h2>
+  <p class="sec-sub">Each skill placed in the UBS context where it would be applied.</p>
+
+  <div class="skills-table-wrap">
+    <table class="skills-table">
+      <thead>
+        <tr>
+          <th>Skill</th>
+          <th>Level</th>
+          <th>Proof</th>
+          <th>UBS Application</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Advanced Excel — VLOOKUP, PivotTables, Modelling</strong></td>
+          <td><span class="skill-level-badge level-expert">Expert</span></td>
+          <td style="font-size:12px;color:#555">MIS system at Holysun; P&amp;L models at Crusha; Colgate dashboard</td>
+          <td><span class="ubs-skill-link">Group Finance · Product Control</span></td>
+        </tr>
+        <tr>
+          <td><strong>MIS Reporting &amp; Automation</strong></td>
+          <td><span class="skill-level-badge level-expert">Expert</span></td>
+          <td style="font-size:12px;color:#555">Built from scratch at Holysun; 30% efficiency improvement</td>
+          <td><span class="ubs-skill-link">CFO Group · Management Reporting</span></td>
+        </tr>
+        <tr>
+          <td><strong>Budget vs. Actual Variance Analysis</strong></td>
+          <td><span class="skill-level-badge level-expert">Expert</span></td>
+          <td style="font-size:12px;color:#555">Core deliverable at Holysun across material, labour, equipment heads</td>
+          <td><span class="ubs-skill-link">Group Finance · FP&amp;A</span></td>
+        </tr>
+        <tr>
+          <td><strong>Financial Statement Analysis</strong></td>
+          <td><span class="skill-level-badge level-advanced">Advanced</span></td>
+          <td style="font-size:12px;color:#555">5-year common-size analysis for Colgate-Palmolive project</td>
+          <td><span class="ubs-skill-link">UBS Research · CIO Office</span></td>
+        </tr>
+        <tr>
+          <td><strong>P&amp;L Reconciliation</strong></td>
+          <td><span class="skill-level-badge level-advanced">Advanced</span></td>
+          <td style="font-size:12px;color:#555">Month-end reconciliation across clients at CA firm; billing recon at Crusha</td>
+          <td><span class="ubs-skill-link">Investment Bank · Product Control</span></td>
+        </tr>
+        <tr>
+          <td><strong>Statutory Audit &amp; Compliance</strong></td>
+          <td><span class="skill-level-badge level-advanced">Advanced</span></td>
+          <td style="font-size:12px;color:#555">Cooperative bank audit; zero compliance flags across 2 years</td>
+          <td><span class="ubs-skill-link">Group Risk · Internal Audit · FINMA Reporting</span></td>
+        </tr>
+        <tr>
+          <td><strong>CAMELS Framework &amp; Basel III</strong></td>
+          <td><span class="skill-level-badge level-advanced">Advanced</span></td>
+          <td style="font-size:12px;color:#555">Deutsche Bank vs. Indian banks project; 5-year real data</td>
+          <td><span class="ubs-skill-link">Group Risk · Capital Adequacy Reporting</span></td>
+        </tr>
+        <tr>
+          <td><strong>Credit Assessment</strong></td>
+          <td><span class="skill-level-badge level-proficient">Proficient</span></td>
+          <td style="font-size:12px;color:#555">20+ loan applicant evaluations at CA firm</td>
+          <td><span class="ubs-skill-link">Wealth Management · Credit Advisory</span></td>
+        </tr>
+        <tr>
+          <td><strong>Power BI</strong></td>
+          <td><span class="skill-level-badge level-building">Building</span></td>
+          <td style="font-size:12px;color:#555">Active certification in progress</td>
+          <td><span class="ubs-skill-link">Group Finance · Data &amp; Analytics</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tally ERP / TallyPrime</strong></td>
+          <td><span class="skill-level-badge level-building">Building</span></td>
+          <td style="font-size:12px;color:#555">Active certification in progress</td>
+          <td><span class="ubs-skill-link">Finance Operations</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="content-sec" id="projects">
+  <div class="sec-eyebrow">Academic Projects</div>
+  <h2 class="sec-title">Work that maps directly<br/>to UBS frameworks.</h2>
+
+  <div class="project-card">
+    <div class="pc-banner">
+      <div class="pc-tag">Banking Performance Analysis · CAMELS · Basel III · 5-Year Data</div>
+      <div class="pc-ubs-label">UBS: Capital Adequacy / Group Risk</div>
+    </div>
+    <div class="pc-body">
+      <div>
+        <div class="pc-title">Deutsche Bank vs. India's Top 10 Private Banks</div>
+        <p class="pc-desc">Applied CAMELS rating framework and Basel III compliance review to 5 years of Deutsche Bank data, benchmarked against 10 Indian private sector banks across capital adequacy, asset quality, earnings, and liquidity.</p>
+        <ul class="pc-bullets">
+          <li>Evaluated capital adequacy, asset quality, earnings, and liquidity metrics against RBI-regulated peers</li>
+          <li>Mapped Deutsche Bank's capital adequacy and liquidity ratios to surface risk exposure differences</li>
+          <li>Identified a 15% operational efficiency gap through ratio-based analysis</li>
+          <li>Delivered structured management report with specific improvement recommendations to faculty panel</li>
+        </ul>
+      </div>
+      <div class="pc-sidebar">
+        <div class="pc-sidebar-label">UBS Division Link</div>
+        <div class="pc-sidebar-service">UBS Group Risk &amp; CFO Group</div>
+        <p class="pc-sidebar-text">UBS CFO Group monitors the same Basel III capital ratios I applied to Deutsche Bank data — CET1 adequacy, LCR, NSFR. The CAMELS framework I used directly mirrors UBS's internal bank health monitoring approach across its global subsidiaries.</p>
+        <div class="pc-finding">
+          <strong>Key Finding</strong>
+          15% operational efficiency gap identified through capital adequacy and liquidity divergences — delivered as a structured management report with specific recommendations.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="pc-banner">
+      <div class="pc-tag">5-Year Common-Size Analysis · Excel Model · ROE / ROIC / Margin Trends</div>
+      <div class="pc-ubs-label">UBS: Research / CIO Office / WM Analytics</div>
+    </div>
+    <div class="pc-body">
+      <div>
+        <div class="pc-title">Financial Statement Analysis — Colgate-Palmolive India</div>
+        <p class="pc-desc">5-year common-size analysis of income statements and balance sheets to track revenue trends, cost structure shifts, and margin compression — with a dynamic Excel dashboard and strategic recommendations.</p>
+        <ul class="pc-bullets">
+          <li>Built advanced Excel financial model and dynamic dashboard tracking ROE, ROIC, gross margin, and operational efficiency year-on-year</li>
+          <li>Identified gross margin erosion driven by rising input costs across the 5-year period</li>
+          <li>Presented strategic cost optimisation recommendations to faculty evaluation panel</li>
+        </ul>
+      </div>
+      <div class="pc-sidebar">
+        <div class="pc-sidebar-label">UBS Division Link</div>
+        <div class="pc-sidebar-service">UBS Research &amp; CIO Office</div>
+        <p class="pc-sidebar-text">UBS Research analysts build structured financial models and produce equity research reports — exactly what I did here with Colgate-Palmolive. The CIO Office tracks the same kinds of margin metrics and ratio analysis to advise Wealth Management clients globally.</p>
+        <div class="pc-finding">
+          <strong>Key Finding</strong>
+          ~3% gross margin erosion over 5 years driven by input cost inflation — with specific optimisation recommendations supported by ratio analysis.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION & CERTS -->
+<section class="content-sec" id="education">
+  <div class="sec-eyebrow">Academic Background</div>
+  <h2 class="sec-title">Commerce to banking analytics.</h2>
+
+  <div class="edu-certs-grid">
+    <div>
+      <div class="edu-list">
+        <div class="edu-row">
+          <div class="edu-year-box">2024–26</div>
+          <div>
+            <div class="edu-degree">PGDM — Finance &amp; Business Analytics</div>
+            <div class="edu-school">ISBM, Pune · Final Year</div>
+          </div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-year-box">2021–24</div>
+          <div>
+            <div class="edu-degree">B.Com (Hons.) — Accounts</div>
+            <div class="edu-school">Patliputra University</div>
+            <div class="edu-grade">71%</div>
+          </div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-year-box">2020</div>
+          <div>
+            <div class="edu-degree">Class 12 (HSC) — Biology</div>
+            <div class="edu-school">St. Joseph's High School, Patna</div>
+            <div class="edu-grade">66.6%</div>
+          </div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-year-box">2018</div>
+          <div>
+            <div class="edu-degree">Class 10 (SSC)</div>
+            <div class="edu-school">St. Joseph's High School, Patna</div>
+            <div class="edu-grade">90.4%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="cert-list">
+        <div class="cert-row">
+          <div class="cert-dot done"></div>
+          <div>
+            <div class="cert-name">CPBFI — Certified Professional in Banking, Finance &amp; Insurance</div>
+            <div class="cert-status done">Completed · Bajaj Finserv</div>
+          </div>
+        </div>
+        <div class="cert-row">
+          <div class="cert-dot done"></div>
+          <div>
+            <div class="cert-name">NISM SEBI Investor Awareness Test</div>
+            <div class="cert-status done">Completed · NISM</div>
+          </div>
+        </div>
+        <div class="cert-row">
+          <div class="cert-dot done"></div>
+          <div>
+            <div class="cert-name">NISM — Listing of Social Stock Exchange</div>
+            <div class="cert-status done">Completed · NISM</div>
+          </div>
+        </div>
+        <div class="cert-row">
+          <div class="cert-dot done"></div>
+          <div>
+            <div class="cert-name">TCS iON Career Edge — Young Professional</div>
+            <div class="cert-status done">Completed · TCS</div>
+          </div>
+        </div>
+        <div class="cert-row">
+          <div class="cert-dot prog"></div>
+          <div>
+            <div class="cert-name">NISM Series XV — Research Analyst Certification</div>
+            <div class="cert-status prog">In Progress — aligns with UBS Research roles</div>
+          </div>
+        </div>
+        <div class="cert-row">
+          <div class="cert-dot prog"></div>
+          <div>
+            <div class="cert-name">NISM Series XXI-B — Portfolio Management Services</div>
+            <div class="cert-status prog">In Progress — aligns with UBS Asset Management</div>
+          </div>
+        </div>
+        <div class="cert-row">
+          <div class="cert-dot prog"></div>
+          <div>
+            <div class="cert-name">Power BI — Data Visualisation &amp; Reporting</div>
+            <div class="cert-status prog">In Progress — UBS Finance &amp; Analytics teams</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /main-wrap -->
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-title">Open to UBS.<br/><em>Available now.</em></h2>
+      <p class="contact-sub">
+        Finance roles, analytics positions, Product Control, compliance operations — across UBS Group Functions, Investment Bank, or Wealth Management. I'm open to relocation and available immediately upon graduation.
+      </p>
+      <div class="ubs-disclaimer">
+        This portfolio was created to demonstrate genuine alignment between my professional experience and the work UBS's finance and analytics teams do — including Group Functions Finance, Product Control, UBS Research, and CIO Office. References to UBS products and services are for illustrative alignment purposes only and do not imply endorsement.
+      </div>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:pg24sakshi@isbm.ac.in" class="contact-link">📧 pg24sakshi@isbm.ac.in</a>
+      <a href="tel:+919226717296" class="contact-link">📞 +91 92267 17296</a>
+      <a href="tel:+918207319683" class="contact-link">📞 +91 82073 19683</a>
+      <a href="https://linkedin.com/in/sakshi2906" class="contact-link" target="_blank">🔗 linkedin.com/in/sakshi2906</a>
+    </div>
+  </div>
+</div>
+
+<div class="ubs-footer">
+  <div class="ubs-footer-logo">SAKSHI · CANDIDATE PORTFOLIO · 2026</div>
+  <div class="ubs-footer-note">Finance &amp; Business Analytics · PGDM · ISBM Pune · Open to Relocation</div>
+</div>
+
+<script>
+(function() {
+  const NAV_HEIGHT = 116;
+
+  // Smooth scroll helper
+  function smoothScrollTo(selector) {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  // ── All anchor links (nav, topbar, hero CTA) ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      smoothScrollTo(href);
+    });
+  });
+
+  // ── Division tabs ──
+  const tabTargets = ['#why-ubs', '#projects', '#skills', '#projects', '#experience'];
+  document.querySelectorAll('.division-tab').forEach((tab, i) => {
+    tab.style.cursor = 'pointer';
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.division-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      smoothScrollTo(tabTargets[i]);
+    });
+  });
+
+  // ── Active nav highlight on scroll ──
+  const sections = Array.from(document.querySelectorAll('section.content-sec[id]'));
+  const navLinks = document.querySelectorAll('.nav-links a');
+  function updateActiveNav() {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - NAV_HEIGHT - 10) current = sec.id;
+    });
+    navLinks.forEach(a => {
+      const isActive = a.getAttribute('href') === '#' + current;
+      a.style.color = isActive ? 'var(--ubs-red)' : '';
+      a.style.borderBottomColor = isActive ? 'var(--ubs-red)' : '';
+    });
+  }
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+})();
+</script>
+</body>
+</html>
